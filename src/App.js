@@ -22,14 +22,15 @@ function App() {
       ...prev, song: addSong
     }});
     
-
+    console.log(song.song.length === 0);
     if(title !== '' && song.song.length !== 0) {
       setPlaylistName(title);
       setToggle(true);
       setAddSong([]);
       setTitle('');
     } else {
-      return
+      
+      setToggle(false);
     }
     
   }
