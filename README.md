@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+### jamming
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Overview
 
-## Available Scripts
+The Jamming App is a React-based project that integrates with the Spotify API to allow users to search for songs, add them to a custom playlist, and save their playlists for viewing later. This README provides an overview of the codebase, its functionality, and setup instructions.
 
-In the project directory, you can run:
 
-### `npm start`
+### Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Search for Songs:
+Users can search for tracks using the Spotify API.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Displays up to 10 results for each query.
 
-### `npm test`
+Create and Manage Playlists: Add tracks to a playlist.
+Remove tracks from the playlist.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Save Playlists:
+Save the playlist with a custom name.
+View saved playlists on demand.
 
-### `npm run build`
+# Dynamic UI:
+Responsive and interactive components styled using CSS Modules.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Code Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# State Management
 
-### `npm run eject`
+### name: Stores the search query name.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### playlistName: Stores the name of the current playlist.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### playlist: Stores the list of available tracks fetched from Spotify.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### addSong: Stores the list of tracks added to the current playlist.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### input: Tracks the user's search input.
 
-## Learn More
+### title: Tracks the name for the playlist being saved.
+                                                        
+### song: Stores the saved playlist.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### toggle: Boolean to display or hide saved playlists.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### showPlaylist: Boolean to toggle the visibility of the saved playlist.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+# Main Functions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+1. Song:
+Fetches track data from the Spotify API based on the user's query.
+Updates the playlist and name states.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. addPlay:
+Adds a song from the search results to the playlist.
 
-### Advanced Configuration
+3. removePlay:
+Removes a song from the playlist.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+4. handleSubmit:
+Saves the playlist with a custom name and resets the playlist input fields.
 
-### Deployment
+Components:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. Search Bar:
+Input field and button to search for tracks.
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+3. Results Section:
+Displays tracks fetched from the Spotify API.
+Allows adding songs to the playlist.
+
+4. Playlist Section:
+Displays the current playlist and allows removal of tracks.
+
+5. Saved Playlists:
+Displays the saved playlists with an option to toggle their visibility.
+
+Dependencies
+
+React: Core library for building user interfaces.
+
+
+CSS Modules: Scoped styling for React components.
+
+Spotify API: Provides access to song data.
+
+
+RapidAPI: Proxy service for Spotify API.
