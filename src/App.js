@@ -12,6 +12,7 @@ function App() {
   const [song, setSong] = useState({})
   const [toggle, setToggle] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
+  const [singerName, setSingerName] = useState('');
 
   
 
@@ -22,7 +23,7 @@ function App() {
       ...prev, song: addSong
     }});
     
-    console.log(song.song.length === 0);
+
     if(title !== '' && song.song.length !== 0) {
       setPlaylistName(title);
       setToggle(true);
@@ -72,7 +73,7 @@ function App() {
               fontSize: "small"
 
             }}>
-              {name}
+              {singerName}
             </li>
           </ul>
         </div>
@@ -98,9 +99,13 @@ function App() {
       const response = await fetch(url, options)
       if (response.ok) {
         const jsonResponse = await response.json();
+        console.log(jsonResponse);
         const query = jsonResponse.query;
-
+        const artist = jsonResponse.tracks.items[0].data.artists.items[0].profile.name;
         const res = jsonResponse.tracks.items;
+        console.log(artist);
+        setSingerName(artist);
+        console.log(res);
         setName(query.replace('+', " "));
         if (playlist.length < 10) {
           for (let i = 0; i < Math.min(res.length, 10); i++) {
@@ -159,7 +164,7 @@ function App() {
                       fontFamily: "cursive",
                       fontSize: "small"
 
-                    }} >{name}</li>
+                    }} >{singerName}</li>
                   </ul>
                 </div>
 
