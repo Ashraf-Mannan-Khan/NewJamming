@@ -9,7 +9,7 @@ function App() {
   const [addSong, setAddSong] = useState([]);
   const [input, setInput] = useState('');
   const [title, setTitle] = useState('');
-  const [song, setSong] = useState({})
+  const [song, setSong] = useState({song:[]})
   const [toggle, setToggle] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
   const [singerName, setSingerName] = useState('');
@@ -23,8 +23,9 @@ function App() {
       ...prev, song: addSong
     }});
     
-
-    if(title !== '' && song.song.length !== 0) {
+ 
+    
+    if(title !== '' && song.song.length !== 0 ) {
       setPlaylistName(title);
       setToggle(true);
       setAddSong([]);
