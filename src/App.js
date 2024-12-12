@@ -49,6 +49,7 @@ function App() {
       setAddSong([]);
       setTitle('');
       setLoadingOn(true);
+      setLoadingOff(false);
     } else {
 
     setToggle(false);
