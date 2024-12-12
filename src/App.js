@@ -3,7 +3,7 @@ import styles from "./jamming.module.css";
 
 
 function App() {
-  const [name, setName] = useState('');
+
   const [playlistName, setPlaylistName] = useState('');
   const [playlist, setPlaylist] = useState([]);
   const [addSong, setAddSong] = useState([]);
@@ -13,28 +13,53 @@ function App() {
   const [toggle, setToggle] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
   const [singerName, setSingerName] = useState('');
+  const [url, setUrl] = useState([]);
+  const [loadingOn,setLoadingOn] = useState(false);
+  const [loadingOff,setLoadingOff] = useState(false);
 
-  
+  const [info, setInfo] = useState({
+    heading: '',
+    song: [],
+  });
+
+
+
 
   function handleSubmit() {
     
-   
+   setInfo((prev) => {
+    return {
+      
+      
+      ...prev,
+      heading: title,
+      song : addSong,
+     
+    }
+   });
     setSong((prev) => {return {
       ...prev, song: addSong
     }});
     
  
     
-    if(title !== '' && song.song.length !== 0 ) {
+    if(title.length !==0 && song.song.length !== 0 ) {
       setPlaylistName(title);
       setToggle(true);
       setAddSong([]);
       setTitle('');
+      setLoadingOn(true);
     } else {
-      
-      return
+
+    setToggle(false);
+    return;
     }
-    
+   setTimeout(()=> {
+    setLoadingOn(false);
+    setLoadingOff(true);
+   },2000);
+   
+
   }
 
 
@@ -57,13 +82,14 @@ function App() {
 
   const track = addSong.map((song, index) => {
     return (
+      <>
       <div className={styles.innerBoxTwo} >
         <div >
           <ul>
             <li key={index}>
               {song}
             </li>
-            <hr ></hr>
+            
             <li >
               {singerName}
             </li>
@@ -72,8 +98,38 @@ function App() {
         <div ><button onClick={() => removePlay(index)} className={styles.plusButton} >-</button></div>
 
       </div>
+      
+      </>
     )
   });
+
+  const savedPlaylist = (     
+  <div className={styles.savedtrack}>
+    <div className={styles.savedtrackcont}>
+    <div>
+    {toggle && <h3>{info.heading}</h3>}
+      </div> 
+      
+      <div>
+      {toggle && !showPlaylist ? < button onClick={() => setShowPlaylist(true)} className={styles.savedtrackButton}>+</button> : null}
+      {toggle && showPlaylist && < button onClick={() => 
+      setShowPlaylist(false)}
+       className={styles.savedtrackButton} >-</button>}
+      </div>
+
+
+      
+    </div>
+
+    <div className={styles.lastchild}>
+      {showPlaylist && toggle &&
+        <ul >
+          {info.song.map((song,index) => <li className={styles.liststyle} key={index}>{song}</li>)}
+          
+        </ul>
+       }
+    </div>
+  </div> );
 
   const Song = async (event) => {
     event.preventDefault();
@@ -95,17 +151,20 @@ function App() {
         const query = jsonResponse.query;
         const artist = jsonResponse.tracks.items[0].data.artists.items[0].profile.name;
         const res = jsonResponse.tracks.items;
-        console.log(artist);
+      
         setSingerName(artist);
-        console.log(res);
-        setName(query.replace('+', " "));
-        if (playlist.length < 10) {
+        const songUrl = res[0].data.albumOfTrack.sharingInfo.shareUrl;
+        console.log(songUrl);
+           if (playlist.length < 10) {
           for (let i = 0; i < Math.min(res.length, 10); i++) {
             setPlaylist((prev) => {
               return [res[i].data.name, ...prev];
             }
             )
+            setUrl((prev )=> {
+              return [res[i].data.albumOfTrack.sharingInfo.shareUrl, ...prev]
 
+            });
           }
         }
 
@@ -139,12 +198,16 @@ function App() {
           <h2 >Results</h2>
           {playlist.map((tracks, index) => {
             return (
+              <>
               <div className={styles.innerBoxOne}>
-                <div >
+                <div className={styles.bottomBorder}>
                   <ul>
                     <li >{tracks}</li>
-                    <hr ></hr>
+                  
                     <li >{singerName}</li>
+                   <li>
+                    <audio src={url[0]} />
+                   </li>
                   </ul>
                 </div>
 
@@ -153,7 +216,8 @@ function App() {
                 </div>
 
               </div>
-
+              <hr></hr>
+              </>
             )
           })}
 
@@ -174,36 +238,11 @@ function App() {
           <button type='submit' onClick={handleSubmit} className={styles.savePlaylistButton}  >Save Playlist</button>
           </div>
           
-          
+         
         </div>
-
-        <div className={styles.savedtrack}>
-          <div className={styles.savedtrackcont}>
-            <div>
-            {toggle && <h3>{playlistName}</h3>}
-            </div>
-            
-            <div>
-            {toggle && !showPlaylist ? < button onClick={() => setShowPlaylist(true)} className={styles.savedtrackButton}>+</button> : null}
-            {toggle && showPlaylist && < button onClick={() => 
-            setShowPlaylist(false)}
-             className={styles.savedtrackButton} >-</button>}
-            </div>
-
-
-            
-          </div>
-
-          <div className={styles.lastchild}>
-            {showPlaylist && toggle &&
-              <ul >
-                {song.song.map((song,index) => <li className={styles.liststyle} key={index}>{song}</li>)}
-                
-              </ul>
-             }
-          </div>
-        </div>
-
+       
+        {loadingOn ? <p>Paylist Being Saved....</p>: null}
+        {loadingOff ? savedPlaylist: null}
       </div>
 
 

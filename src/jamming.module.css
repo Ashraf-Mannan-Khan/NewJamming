@@ -62,7 +62,7 @@
     gap: 1rem;
     flex-wrap: wrap;
     width: 100vw;
-   height: 100vh;
+   height: 100%;
   background-color: #fff;
   justify-content: space-evenly;
   background: linear-gradient(to right, #00B4D8, #1A237E);
@@ -70,20 +70,21 @@
 
     
 }
-@media only screen and (max-width: 900px){
+@media only screen and (max-width: 1300px) {
     .box{
         flex-direction: column;
-       height: fit-content;
+        height: fit-content;
         align-items: center;
+      
     }
 }
 
 .firstbox{
     border: 2px solid #00C6FF;
-
+    
     margin: 10px ;
    width: 500px;
-   height: 500px;
+   height: 600px;
 
     
   
@@ -91,14 +92,22 @@
 .firstbox > h2 {
     text-align: center;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
+.firstbox > div {
+    margin-bottom: 10px;
+    
+}
+
 .innerBoxOne{
     
     display: flex;
     
     justify-content: space-between;
     align-items: center;
+
 }
+
 
 
 .secondbox {
@@ -108,9 +117,10 @@
      align-items: center;
     width: 500px;
     border: 2px solid #0D47A1;
-    height: 500px;
+    height: calc(600px - 15px);
  
 }
+
 .innerBoxTwo:nth-child(2) {
    width: 400px;
 }
@@ -200,8 +210,8 @@ ul{
    display: flex; 
   flex-direction: column;
   margin-top: 10px;
-   width: 475px;
- height: 500px;
+   width: 500px;
+ height: calc(600px - 15px);
  border: 2px solid #FFFFFF;
 
  
