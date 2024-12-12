@@ -32,7 +32,7 @@ function App() {
       setTitle('');
     } else {
       
-      setToggle(false);
+      return
     }
     
   }
@@ -57,28 +57,19 @@ function App() {
 
   const track = addSong.map((song, index) => {
     return (
-      <div style={{
-      
-        display: "flex",
-      alignItems: "center",
-     justifyContent: "space-between"
-      }}>
-        <div style={{marginRight:20}}>
+      <div className={styles.innerBoxTwo} >
+        <div >
           <ul>
-            <li key={index} style={{ fontFamily: "cursive" }}>
+            <li key={index}>
               {song}
             </li>
             <hr ></hr>
-            <li style={{
-              fontFamily: "cursive",
-              fontSize: "small"
-
-            }}>
+            <li >
               {singerName}
             </li>
           </ul>
         </div>
-        <div style={{ marginLeft: 10 }}><button onClick={() => removePlay(index)} className={styles.plusButton}style={{marginLeft:20}} >-</button></div>
+        <div ><button onClick={() => removePlay(index)} className={styles.plusButton} >-</button></div>
 
       </div>
     )
@@ -143,33 +134,21 @@ function App() {
       </div >
       <div className={styles.box}>
 
-        <div className={styles.box1}>
+        <div className={styles.firstbox}>
 
-          <h2 style={{
-            fontFamily: "monospace",
-            marginBottom: 5
-          }}>Results</h2>
+          <h2 >Results</h2>
           {playlist.map((tracks, index) => {
             return (
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                flexWrap: 'nowrap'
-              }}>
+              <div className={styles.innerBoxOne}>
                 <div >
                   <ul>
-                    <li style={{ fontFamily: "cursive" }}>{tracks}</li>
+                    <li >{tracks}</li>
                     <hr ></hr>
-                    <li style={{
-                      fontFamily: "cursive",
-                      fontSize: "small"
-
-                    }} >{singerName}</li>
+                    <li >{singerName}</li>
                   </ul>
                 </div>
 
-                <div style={{ marginLeft: 10 }}>
+                <div >
                   <button onClick={() => addPlay(index)} className={styles.plusButton}>+</button>
                 </div>
 
@@ -179,8 +158,8 @@ function App() {
           })}
 
         </div>
-        <div className={styles.box2}>
-          <div style={{marginBottom:5}}>
+        <div className={styles.secondbox}>
+          <div >
           <input type="text" value={title} className={styles.input2} onChange={
           ({ target }) => {
             setTitle(target.value);
@@ -188,11 +167,11 @@ function App() {
           }
         }/>
           </div>
-          <div style={{marginBottom:5}}>
+          <div >
           {track}
           </div>
           <div>
-          <button type='submit' onClick={handleSubmit} className={styles.searchButton} style={{ marginTop: 10 }} >Save Playlist</button>
+          <button type='submit' onClick={handleSubmit} className={styles.savePlaylistButton}  >Save Playlist</button>
           </div>
           
           
@@ -215,10 +194,10 @@ function App() {
             
           </div>
 
-          <div>
+          <div className={styles.lastchild}>
             {showPlaylist && toggle &&
-              <ul className={styles.ul}>
-                {song.song.map(song => <li>{song}</li>)}
+              <ul >
+                {song.song.map((song,index) => <li className={styles.liststyle} key={index}>{song}</li>)}
                 
               </ul>
              }
