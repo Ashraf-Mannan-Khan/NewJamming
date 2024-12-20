@@ -162,7 +162,7 @@ const SpotifySongSearch = () => {
         <h1>Jamming</h1>
       </div>
 
-      <button onClick={handleLogin}>Login to Spotify</button>
+     
       <h1>Spotify Song Search</h1>
       <input
         type="text"
