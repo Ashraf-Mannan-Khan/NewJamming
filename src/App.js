@@ -4,7 +4,7 @@ import styles from "./jamming.module.css";
 
 const clientId = '27e5a678ded9406f9eac4d869726a110'; // Replace with your Client ID
 const clientSecret = 'd1a8e945d82c44df84ad6faa7a7f713b';// Replace with your Client Secret
-const redirectUri = "http://localhost:3000/callback"; // Replace with your redirect URI
+const redirectUri = "https://amkprojects.netlify.app/callback"; // Replace with your redirect URI
 const scopes = "user-read-private user-read-email user-library-read";
 
 
