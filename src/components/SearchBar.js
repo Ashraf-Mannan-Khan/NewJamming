@@ -1,7 +1,8 @@
-import React from "react";
-import styles from '../jamming.module.css'
+import React, { useEffect } from "react";
+import styles from './jammingNew.module.css'
 
-const SearchBar = ({input, setInput, accessToken, playlist, setPlaylist, setNewSong, info}) => {
+const SearchBar = ({input, setInput, accessToken, playlist, setPlaylist, setNewSong, info, singerName, setSingerName,filterSong}) => {
+
 
   const onSearch = async (event) => {
     event.preventDefault();
@@ -27,22 +28,34 @@ const SearchBar = ({input, setInput, accessToken, playlist, setPlaylist, setNewS
       }
 
       const data = await res.json(); // Awaited the response JSON parsing
-      console.log(data.tracks.items.length);
-      for (let i = 0; i < data.tracks.items.length; i++) {
-        setPlaylist((prev) => [data.tracks.items[i].name, ...prev]);
-      }
-      setNewSong(playlist.filter((s) => !info.song.some((val) => val === s)));
+      
 
+    console.log(data.tracks.items);
+     for(let i=0; i <  data.tracks.items.length; i++) {
+      setPlaylist(prev => [
+        {songName: data.tracks.items[i].name,
+          artistName: data.tracks.items[i].artists.map(artist => artist.name).join(' & '),
+          id: data.tracks.items[i].id,
+        uri: data.tracks.items[i].uri,
+          image: data.tracks.items[i].album.images[0].url
+      }, ...prev
+        
+      ]);
+     }
+     
+  
       // console.log(playlist.filter(s => info.song.every(val => val !== s)));
-      // console.log(data.tracks.items);
+    //  console.log(data.tracks.items[0].artists[0].name  ) ;
     } catch (error) {
       console.error("Error fetching song:", error);
     }
+    
+  
   };
 
 
   return (
-    <div className={styles.searchContainer}>
+    <div className={styles.searchContainer} value={input}>
       <input
         type="search"
         id="input"

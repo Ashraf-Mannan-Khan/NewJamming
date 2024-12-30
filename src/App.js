@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import styles from "./jamming.module.css";
+// import styles from "./jamming.module.css";
 import Header from "./components/Header";
 import SearchBar from "./components/SearchBar";
 import PlaylistContainer from "./components/PlaylistContainer";
-
+import styles from "../src/components/jammingNew.module.css";
 export const clientId = "27e5a678ded9406f9eac4d869726a110";
 
 function App() {
   // States
+  let playlistId = "";
+  let uris = [];
   const [playlistName, setPlaylistName] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const [addSong, setAddSong] = useState([]);
@@ -16,22 +18,15 @@ function App() {
   const [song, setSong] = useState({ song: [] });
   const [toggle, setToggle] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
-  const [singerName, setSingerName] = useState("");
-
+  const [singerName, setSingerName] = useState([]);
+  const [userId, setUserId] = useState('');
   const [visble, setVisble] = useState(false);
   const [loading, setLoading] = useState(false);
   const [newSong, setNewSong] = useState([]);
-  const [login, setLogin] = useState(false);
+  const [display, setDisplay] = useState(false);
+  let filterSong = [];
 
-  const [info, setInfo] = useState(() => {
-    const saved = localStorage.getItem("savedPlaylist");
-    return saved
-      ? JSON.parse(saved)
-      : {
-          heading: "",
-          song: [],
-        };
-  });
+  
 
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("spotifyAccessToken") || ""
@@ -43,12 +38,13 @@ function App() {
   // Hooks
 
   useEffect(() => {
-    setVisble(true);
-    setToggle(true);
-    setShowPlaylist(true);
+    
+   
     setInput(localStorage.getItem("searchTerm"));
+   
+    
+   
 
-    console.log(info);
   }, []);
 
   useEffect(() => {
@@ -71,56 +67,121 @@ function App() {
   // Functions
 
   function handleSubmit() {
-    setInfo((prev) => {
-      return {
-        ...prev,
-        heading: title,
-        song: addSong,
+   
+    uris =  addSong.map(items => items.uri);
+    
+
+    const getUserId = async () => {
+      const url = "https://api.spotify.com/v1/me";
+      const authorizationSearch = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json", // Fixed incorrect 'applications/json' to 'application/json'
+          Authorization: `Bearer ${accessToken}`, // Added a space after 'Bearer' and used template literals for clarity
+        },
       };
-    });
-
-    setSong((prev) => {
-      return {
-        ...prev,
-        song: addSong,
+      try {
+        const response = await fetch(url, authorizationSearch);
+        if(response.ok) {
+          const jsonResponse = await response.json();
+          console.log(jsonResponse);
+          setUserId(jsonResponse.id);
+        }
+      } catch(error) {
+        console.log(error);
+      }
+    }
+    const playlistMaker = async() => {
+      const url = `https://api.spotify.com/v1/users/31hpdlxuvqqngh54ustxffmyd2fq/playlists/`;
+      const authorizationSearch = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Fixed incorrect 'applications/json' to 'application/json'
+          Authorization: `Bearer ${accessToken}`, // Added a space after 'Bearer' and used template literals for clarity
+        },
+        body: JSON.stringify({
+          name: title,
+          description: "Playing with Api",
+          public: false,
+         
+        }),
       };
-    });
-
-    if (title.length !== 0 && song.song.length !== 0) {
-      setLoading(true);
-
-      setPlaylistName(title);
-      setToggle(true);
-
-      setAddSong([]);
-      setTitle("");
-      setVisble(false);
-      setPlaylist([]);
-      localStorage.setItem("savedPlaylist", JSON.stringify(info));
-    } else {
-      setToggle(false);
-      return;
+      try{
+        const res = await fetch(url, authorizationSearch);
+        if(res.ok ) {
+          const responseJson = await res.json();
+          playlistId = responseJson.id;
+        } 
+      }catch(error) {
+        console.log(error);
+      }
     }
 
+    const savingSong = async() => {
+      const url =  ` https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+      const data = {
+        uris: uris, // Must contain valid URIs
+        position: 0
+    };
+      const authorizationSearch = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Fixed incorrect 'applications/json' to 'application/json'
+          Authorization: `Bearer ${accessToken}`, // Added a space after 'Bearer' and used template literals for clarity
+        },
+        body: JSON.stringify(data)
+        
+        };
+        try {
+          const resp = await fetch(url, authorizationSearch);
+          if(resp.ok) {
+            const respJson = await resp.json();
+            console.log(respJson);
+          }  else {
+            console.log("something Went Worng")
+          }
+        }catch(error) {
+          console.log(error);
+        }
+      };
+    
+      getUserId();
+      if(title.length !== 0 && addSong.length !==0) {
+        setLoading(true);
+        setDisplay(true);
+      }
+  
     setTimeout(() => {
-      setVisble(true);
+     
+      
+      playlistMaker();
     }, 1000);
 
     setTimeout(() => {
-      setLoading(false);
+      savingSong();
+      setDisplay(false);
+     
     }, 3000);
+    setTimeout(()=> {
+      setLoading(false);
+    }, 5000)
 
-    console.log(info);
+    setAddSong([]);
+    setTitle('');
   }
 
-  function addPlay(i) {
-    setAddSong((prev) => {
-      if (prev.includes(newSong[i])) {
-        return [...prev];
-      } else {
-        return [newSong[i], ...prev];
-      }
-    });
+  function addPlay(index) {
+   setAddSong(prev => {
+    if(prev.includes(playlist[index])) {
+      return [...prev];
+    } else {
+      return [
+        playlist[index], ...prev
+       ];
+     
+    }
+   })
+   console.log(addSong);
   }
 
   function removePlay(i) {
@@ -133,9 +194,16 @@ function App() {
         <div className={styles.innerBoxTwo}>
           <div>
             <ul>
-              <li key={index}>{song}</li>
+              <li><img src={song.image} alt="image"
+               style={{
+                width: 50,
+                height:50,
+                
+              }}
+              /></li>
+              <li key={index}>{song.songName}</li>
 
-              <li>{singerName}</li>
+              <li>{song.artistName}</li>
             </ul>
           </div>
           <div>
@@ -151,45 +219,7 @@ function App() {
     );
   });
 
-  const savedPlaylist = (
-    <div className={styles.savedtrack}>
-      <div className={styles.savedtrackcont}>
-        <div>{toggle && <h3>{info.heading}</h3>}</div>
-
-        <div>
-          {toggle && !showPlaylist ? (
-            <button
-              onClick={() => setShowPlaylist(true)}
-              className={styles.savedtrackButton}
-            >
-              +
-            </button>
-          ) : null}
-          {toggle && showPlaylist && (
-            <button
-              onClick={() => setShowPlaylist(false)}
-              className={styles.savedtrackButton}
-            >
-              -
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className={styles.lastchild}>
-        {showPlaylist && toggle && (
-          <ul>
-            {info.song.map((song, index) => (
-              <li className={styles.liststyle} key={index}>
-                {song}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
-  );
-
+ 
   const refreshAccessToken = async () => {
     try {
       const url = "https://accounts.spotify.com/api/token";
@@ -231,68 +261,24 @@ function App() {
         playlist={playlist}
         setPlaylist={setPlaylist}
         setNewSong={setNewSong}
-        info={info}
+        filterSong={filterSong}
+        setSingerName={setSingerName}
+        singerName={singerName}
       />
-      <>
-        <div className={styles.box}>
-          <div className={styles.firstbox}>
-            <h2>Results</h2>
-            {newSong.slice(0, 10).map((tracks, index) => {
-              return (
-                <>
-                  <div className={styles.innerBoxOne}>
-                    <div className={styles.bottomBorder}>
-                      <ul>
-                        <li>{tracks}</li>
-
-                        <li>{singerName}</li>
-                        <li></li>
-                      </ul>
-                    </div>
-
-                    <div>
-                      <button
-                        onClick={() => addPlay(index)}
-                        className={styles.plusButton}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <hr></hr>
-                </>
-              );
-            })}
-          </div>
-          <div className={styles.secondbox}>
-            <div>
-              <input
-                type="text"
-                value={title}
-                className={styles.input2}
-                onChange={({ target }) => {
-                  setTitle(target.value);
-                }}
-              />
-            </div>
-            <div>{track}</div>
-            <div>
-              <button
-                type="submit"
-                onClick={handleSubmit}
-                className={styles.savePlaylistButton}
-              >
-                Save Playlist
-              </button>
-            </div>
-          </div>
-          {visble && (
-            <div>
-              {loading ? <p>Paylist Being Saved....</p> : savedPlaylist}
-            </div>
-          )}
-        </div>
-      </>
+     <PlaylistContainer
+     addPlay={addPlay}
+      newSong={newSong} 
+      title={title}
+      setTitle ={setTitle}
+      track ={track}
+      visble={visble}
+      loading={loading}
+      handleSubmit={handleSubmit}
+      // savedPlaylist={savedPlaylist}
+      singerName={singerName}
+      playlist={playlist}
+      display={display}
+       />
     </>
   );
 }

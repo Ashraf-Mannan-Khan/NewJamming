@@ -1,0 +1,330 @@
+/* General styling for the outer box */
+*{
+  margin: 0;
+  padding: 0;
+}
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  /* First and second box layout */
+  .firstbox, .secondbox {
+    flex: 1;
+    min-width: 300px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header */
+  .firstbox h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* Inner box for individual items */
+  .innerBoxOne {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Text list */
+  .innerBoxOne ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .innerBoxOne ul li {
+    margin: 5px 0;
+  }
+  
+  /* Button styling */
+  .plusButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .plusButton:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Input field styling */
+  .input2 {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Save Playlist button */
+  .savePlaylistButton {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  .savePlaylistButton:hover {
+    background-color: #218838;
+  }
+  
+  /* Loading message */
+  .box p {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .box {
+      flex-direction: column;
+    }
+  
+    .firstbox, .secondbox {
+      min-width: 100%;
+    }
+  }
+  
+  /* Container for the search bar */
+.searchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Input field */
+.inputBar {
+  flex:1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.inputBar:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Search button */
+.searchButton {
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.searchButton:hover {
+  background-color: #0056b3;
+}
+
+.searchButton:active {
+  background-color: #003d80;
+}
+
+/* Container for the heading */
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #1db954; /* Spotify Green */
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Logo styling */
+.heading img {
+  height: 50px;
+  width: auto;
+  margin-right: 15px;
+  border-radius: 8px;
+}
+
+/* Title styling */
+.heading h1 {
+  font-size: 2rem;
+  margin: 0;
+  flex-grow: 1;
+  text-align: center;
+  color: white;
+}
+
+/* Login/Logout button */
+.logInOut {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #1db954;
+  background-color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logInOut:hover {
+  background-color: #ffffff;
+  color: #1aa34a; /* Slightly darker green */
+}
+
+.logInOut:active {
+  background-color: #e6e6e6;
+}
+
+.card {
+  position: fixed;
+  top: 8%;
+  left : 80%;
+  height: 100px;
+  width: 250px;
+  background-color: #28a745;
+  border-radius: 10px;
+  display: flex;
+ flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+}
+
+@media (max-width: 920px) {
+  .card{
+    position:unset;
+    margin: 0 auto;
+  }
+}
+.cardChildOne {
+display: flex;
+gap: .5rem;
+}
+.cardChildOne p{
+color: white;
+font-size: 18px;
+text-align: center;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 5px solid #f3f3f3; /* Light gray */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.cardChildTwo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cardChildTwo > p {
+color: white;
+font-size: 18px;
+
+}
+.checkmarkWrapper {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4caf50; /* Green background */
+  border-radius: 50%;
+  position: relative;
+  animation: pop 0.3s ease-in-out;
+}
+
+.checkmark {
+  width: 20px;
+  height: 10px;
+  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+  transform: rotate(-45deg) scale(0);
+  animation: draw 0.5s ease-in-out 0.3s forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes draw {
+  0% {
+    transform: rotate(-45deg) scale(0);
+  }
+  100% {
+    transform: rotate(-45deg) scale(1);
+  }
+}
+.innerBoxTwo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+.innerBoxTwo ul {
+  list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+.innerBoxTwo ul li {
+  margin: 5px 0;
+}
