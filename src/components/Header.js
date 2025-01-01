@@ -23,6 +23,7 @@ const Header = ({accessToken, setAccessToken}) => {
     <div className={styles.heading}>
       <img src={logo} alt="abcd"/>
       <h1>Jamming</h1>
+      
       {!accessToken ? (
         <button onClick={handleLogin} className={styles.logInOut}>Login to spotify</button>
       ) : (

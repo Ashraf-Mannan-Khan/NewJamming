@@ -192,7 +192,7 @@ function App() {
     return (
       <>
         <div className={styles.innerBoxTwo}>
-          <div>
+          <div className={styles.bottomBorder}>
             <ul>
               <li><img src={song.image} alt="image"
                style={{
@@ -201,6 +201,9 @@ function App() {
                 
               }}
               /></li>
+              </ul>
+
+              <ul>
               <li key={index}>{song.songName}</li>
 
               <li>{song.artistName}</li>

@@ -328,3 +328,8 @@ font-size: 18px;
 .innerBoxTwo ul li {
   margin: 5px 0;
 }
+
+.bottomBorder {
+  display: flex;
+  gap: 1rem;
+}

@@ -9,29 +9,22 @@ const PlaylistContainer = ({ addPlay, newSong, title, setTitle, track, visble, l
       <div className={styles.box}>
         <div className={styles.firstbox}>
           <h2>Results</h2>
-          {/* {playlist.map((song, index)=> {
-            return (
-              <>
-              <div>{song.name}</div>
-              <div>{song.artists.map(artist => artist.name ).join('&')}</div>
-              </>
-              
-            )
-           })} */}
           {playlist.slice(0, 10).map((tracks, index) => {
             return (
               <>
                 <div className={styles.innerBoxOne}>
                   <div className={styles.bottomBorder}>
-                    <ul>
+                    <ul >
                       <li><img src={tracks.image} alt="image" style={{
                         width: 50,
                         height: 50
                       }} /></li>
+                      </ul>
+                      <ul>
                       <li>{tracks.songName}</li>
                       <li>{tracks.artistName}</li>
 
-                      <li></li>
+                     
                     </ul>
                   </div>
 
